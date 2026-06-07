@@ -18,10 +18,16 @@ class AIService:
 
     def __init__(self) -> None:
         settings = get_settings()
-        if not settings.openai_api_key:
-            raise ValueError("OPENAI_API_KEY must be set in environment")
-        self._client = OpenAI(api_key=settings.openai_api_key)
-        self._model = settings.openai_model
+        if settings.groq_api_key:
+            self._client = OpenAI(api_key=settings.groq_api_key, base_url="https://api.groq.com/openai/v1")
+            self._model = settings.groq_model
+            self._provider = "Groq"
+        else:
+            if not settings.openai_api_key:
+                raise ValueError("Either OPENAI_API_KEY or GROQ_API_KEY must be set in environment")
+            self._client = OpenAI(api_key=settings.openai_api_key)
+            self._model = settings.openai_model
+            self._provider = "OpenAI"
         
         self._memory_service = MemoryService.get_instance()
 
@@ -32,7 +38,7 @@ class AIService:
     )
     def _call_ai(self, prompt: str) -> dict[str, Any]:
         try:
-            logger.info(f"Calling OpenAI with model: {self._model}")
+            logger.info(f"Calling {self._provider} with model: {self._model}")
             response = self._client.chat.completions.create(
                 model=self._model,
                 messages=[

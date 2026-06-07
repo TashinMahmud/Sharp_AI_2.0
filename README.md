@@ -1,4 +1,4 @@
-# 💬 FastAPI Ai Quiz — Interactive Debate Coach & AI Quiz Engine
+# 💬 Sharp AI v2.0 — Conversational Debate Arena & Quiz Engine
 
 <div align="center">
 
@@ -10,9 +10,18 @@
 
 ---
 
-**FastAPI Ai Quiz** is an interactive debate combat coordinator and question generator. Leveraging **OpenAI GPT-4o**, **LangChain**, and **Tenacity** exponential backoffs, the service creates dynamic arguments/counter-arguments, generates multiple-choice quizzes with explanations, evaluates student answers, and runs a session-persisted, summarization-enabled conversational debate coach.
+**Sharp AI v2.0** is the successor to the original Sharp AI platform. It upgrades the core microservice from static topic and quiz generation into a fully interactive **Conversational Debate Arena**. Equipped with **LangChain**, session-persisted SQLite chat histories, and automatic conversation summarization, v2.0 allows users to engage in direct, difficulty-scaled debate combat against an AI coach.
 
 </div>
+
+---
+
+## ⚡ What's New in v2.0 (Upgrade from Sharp AI v1.0)
+
+*   **Interactive Debate Arena (`/debate/chat`)**: Step into roleplay debater modes (`user_argument` | `user_counter` | `user_rebuttal`) and engage in dynamic, multi-turn exchanges with the AI.
+*   **Conversational Memory Summary Triggers**: Automatically compiles and records short debate summaries to SQLite when a session exceeds turn thresholds (e.g., 6 turns) to keep LLM context sizes small and focused.
+*   **Tenacity Robustness layer**: Integrates tenacity-based exponential retry blocks to handle rate limits and service interruptions.
+*   **Enhanced Debate Coach Feedback**: Delivers constructive evaluations and hints directly within active sessions.
 
 ---
 
@@ -22,7 +31,7 @@ This microservice handles the generative tasks for structured debate training.
 
 ```
 +-------------------------------------------------------------+
-|                      CLIENT INTERFACE                       |
+|                      CLIENT INTERACTION                     |
 |   Sends Debate Actions  <--->  Receives Structured JSON     |
 +------------------------------+------------------------------+
                                | (HTTP POST /generate, /quiz, /debate/chat)
@@ -119,12 +128,6 @@ Launch the FastAPI application:
 uvicorn app.main:app --reload
 ```
 Swagger UI will be active at `http://localhost:8000/docs`.
-
-### 4. Running Tests
-Run tests using pytest or python:
-```bash
-pytest
-```
 
 ---
 

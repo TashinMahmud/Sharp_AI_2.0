@@ -15,6 +15,8 @@ class Settings(BaseSettings):
 
     openai_api_key: Optional[str] = None
     openai_model: str = "gpt-4o-mini"
+    groq_api_key: Optional[str] = None
+    groq_model: str = "llama-3.3-70b-versatile"
     debug: bool = False
     memory_max_turns: int = 20
     memory_max_turns: int = 20
